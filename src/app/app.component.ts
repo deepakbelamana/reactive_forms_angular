@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +13,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.rcForm = new FormGroup({
-      'username': new FormControl(null,Validators.required),
-      'email': new FormControl(null,Validators.required),
+      'userData': new FormGroup({
+        'username': new FormControl(null, Validators.required),
+        'email': new FormControl(null, Validators.required),
+      }),
+      'hobbies': new FormArray([]),
       'gender': new FormControl('male')
     })
   }
@@ -23,4 +26,14 @@ export class AppComponent implements OnInit {
     console.log(this.rcForm)
   }
 
+  //dynamically adding content in the form 
+  onAddHobby() {
+    const newHobbie = new FormControl(null, Validators.required);
+    (<FormArray>this.rcForm.get('hobbies')).push(newHobbie);
+    console.log(this.rcForm.get('hobbies'));
+  }
+
+  get Controls() {
+    return (<FormArray>this.rcForm.get('hobbies')).controls;
+  }
 }
