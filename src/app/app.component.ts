@@ -39,6 +39,8 @@ export class AppComponent implements OnInit {
 
   checkUserNameForbidded(control:FormControl) : {[s:string]:boolean} {
     if(this.forbiddenName.indexOf(control.value) !== -1) {
+      // this object will present in the error field of that control ,
+      //in the form object when we submit
       return {'usernameForbidden' : true}
     }
     return null; // either return null or omit return but do not return {usernameForbidden : false}
